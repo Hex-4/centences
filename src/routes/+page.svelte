@@ -1,6 +1,6 @@
 
 <div class="min-w-screen min-h-screen bg-black">
-    <div class="w-3/4 mx-auto pt-20">
+    <div class="w-3/4 mx-auto pt-20 pb-100">
         <h1 class="font-bold text-white text-5xl">centences</h1>
 
         <p class="text-white whitespace-pre-line mt-5">hi.
@@ -33,8 +33,8 @@
 
         <p class="text-gray-300 italic">your username is "{profile.name}". change it below:</p>
 
-        <input type="text" class="bg-black text-white rounded-md border-2 border-white my-2 p-1">
-        <button class="bg-black text-white rounded-md border-2 border-white my-2 p-1">save</button>
+        <input type="text" class="bg-black text-white rounded-md border-2 border-white my-2 p-1" bind:value={preferredName}>
+        <button class="bg-black text-white rounded-md border-2 border-white my-2 p-1" onclick={setName}>save</button>
         <br>
 
         <textarea rows="3" cols="50" class="bg-black text-white rounded-md border-2 border-white my-2 mt-8 placeholder:italic placeholder:text-gray-400 p-1" placeholder="make a post..." bind:value={post}></textarea> 
@@ -61,6 +61,16 @@
         {/if}
 
         <hr class="border-white my-8">
+        
+        {#if allPosts}
+            {#each allPosts.data as post}
+                <Post content={post.content} userid={post.user_id} timestamp={post.created_at} cost={post.cost}/>
+            {/each}
+        {/if}
+
+        <p class="text-gray-500 italic mt-12">a useless experiment by <a class="underline hover:decoration-wavy" href="https://hex4.xyz">hex4</a>. please don't sue me :3</p>
+        
+
     </div>
     
 </div>
@@ -69,6 +79,8 @@
 <script>
     import { supabase } from "$lib/supabase";
     import { onMount } from 'svelte'
+    import Post from "../post.svelte"
+
 
     let user
 
@@ -78,7 +90,7 @@
 
     let profile = $state("loading...")
 
-    let allPosts
+    let allPosts = $state()
 
     // Create our number formatter.
     const formatter = new Intl.NumberFormat('en-US', {
@@ -89,22 +101,7 @@
         trailingZeroDisplay: 'stripIfInteger'
     });
 
-    // helper for "time ago" format
-    function getTimeAgo(timestamp) {
-        const date = new Date(timestamp)
-        const seconds = Math.floor((new Date() - date) / 1000)
-        
-        if (seconds < 60) return `${seconds}s ago`
-        
-        const minutes = Math.floor(seconds / 60)
-        if (minutes < 60) return `${minutes}m ago`
-        
-        const hours = Math.floor(minutes / 60)
-        if (hours < 24) return `${hours}h ago`
-        
-        const days = Math.floor(hours / 24)
-        return `${days}d ago`
-    }
+
 
     onMount(async () => {
         // check if already signed in
@@ -133,6 +130,15 @@
 
         profile = profileData
     })
+
+    async function setName() {
+        const { data, error } = await supabase
+        .from("profiles")
+        .update({ name: preferredName})
+        .eq("id", profile.id)
+        
+        window.location.href = "/"
+    }
 
     async function newPost() {
         await supabase.rpc('create_post_with_payment', { content: post })
