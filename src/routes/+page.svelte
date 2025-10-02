@@ -110,12 +110,14 @@
         // check if already signed in
         const { data: { session } } = await supabase.auth.getSession()
 
-        user = session.user
+        
         
         if (!session) {
             // only create new anon user if not already signed in
             let {data, error} = await supabase.auth.signInAnonymously();
             user = data
+        } else {
+            user = session.user
         }
 
         const { data: profileData } = await supabase
