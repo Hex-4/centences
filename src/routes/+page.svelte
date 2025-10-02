@@ -81,6 +81,9 @@
     import { onMount } from 'svelte'
     import Post from "../post.svelte"
 
+    export const prerender = true
+    export const ssr = false // disable server-side rendering
+
 
     let user
 

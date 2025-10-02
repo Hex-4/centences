@@ -26,6 +26,9 @@
     // @ts-nocheck
     // ts pmo
 
+    export const prerender = true
+    export const ssr = false // disable server-side rendering
+
     import { supabase } from "$lib/supabase";
     import { onMount } from 'svelte'
     import * as poseDetection from '@tensorflow-models/pose-detection'
