@@ -15,7 +15,7 @@
             <br>
             <br>
 
-            start with 50c in credits. buy more (<strike>yes, actually, i set up a stripe account just for this</strike>*), post more. likes cost 2 cents. the money from a like goes to the poster's balance.
+            start with 50c in credits. buy more (<strike>yes, actually, i set up a stripe account just for this</strike>*), post more. likes cost 3 cents. the money from a like goes to the poster's balance.
 
             yes, this is like the stupidest thing I have ever made. yes, I am going to make no money off this. yes, i'm probably going to get ddosed and hacked.
 
@@ -64,7 +64,7 @@
         
         {#if allPosts}
             {#each allPosts.data as post}
-                <Post content={post.content} userid={post.user_id} timestamp={post.created_at} cost={post.cost}/>
+                <Post content={post.content} userid={post.user_id} timestamp={post.created_at} cost={post.cost} {profile} id={post.id} likes={post.likes}/>
             {/each}
         {/if}
 
