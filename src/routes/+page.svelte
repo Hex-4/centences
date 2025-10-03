@@ -5,7 +5,7 @@
 
         <p class="text-white whitespace-pre-line mt-5">hi.
 
-            welcome to centences. this is a joke/social experiment/terrible business idea based on the following premise:
+            welcome to centences. this is a joke/social experiment based on the following premise:
             <br>
             <br>
             <i>
@@ -16,10 +16,8 @@
             <br>
 
             start with 50c in credits. buy more (<strike>yes, actually, i set up a stripe account just for this</strike>*), post more. likes cost 3 cents. the money from a like goes to the poster's balance.
-
-            yes, this is like the stupidest thing I have ever made. yes, I am going to make no money off this. yes, i'm probably going to get ddosed and hacked.
-
-            but if people are stupid enough to pay for PNGs of monkeys, they're stupid enough to pay for a few centences.
+            
+            if people are stupid enough to pay for PNGs of monkeys, they're stupid enough to pay for a few centences.
 
             <br>
             <br>
@@ -37,7 +35,7 @@
         <button class="bg-black text-white rounded-md border-2 border-white my-2 p-1" onclick={setName}>save</button>
         <br>
 
-        <textarea rows="3" cols="50" class="bg-black text-white rounded-md border-2 border-white my-2 mt-8 placeholder:italic placeholder:text-gray-400 p-1" placeholder="make a post..." bind:value={post}></textarea> 
+        <textarea rows="3" class="bg-black text-white rounded-md border-2 border-white my-2 mt-8 placeholder:italic placeholder:text-gray-400 p-1 w-140 max-w-full" placeholder="make a post..." bind:value={post}></textarea> 
 
         {#if post.length > 0}
             <p class="text-white whitespace-pre-line">
