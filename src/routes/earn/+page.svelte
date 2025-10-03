@@ -9,7 +9,7 @@
         <br>
 
         <p class="text-gray-300 italic">you currently have {formatter.format(profile.balance)} in your account. <a class="underline hover:decoration-wavy" href="/">go home?</a></p>  
-        <p class="text-gray-300 italic">not working? make sure both of your wrists and shoulders are in the frame.</p> 
+        <p class="text-gray-300 italic">not working? make sure both of your wrists and shoulders are in the frame. may or may not work on mobile.</p> 
 
         <video bind:this={video} width="640" height="480" class="rounded-lg my-10 outline-2 outline-white"/>
 
@@ -98,9 +98,9 @@
         video.srcObject = stream
         await video.play()
         
-        // load pose model
         detector = await poseDetection.createDetector(
-        poseDetection.SupportedModels.MoveNet
+        poseDetection.SupportedModels.MoveNet,
+        { modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING }
         )
         
         // start detection loop
