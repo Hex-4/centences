@@ -33,7 +33,6 @@
     import { onMount } from 'svelte'
     import * as poseDetection from '@tensorflow-models/pose-detection'
     import '@tensorflow/tfjs-backend-webgl'
-	import { all } from "@tensorflow/tfjs";
     import * as tf from '@tensorflow/tfjs-core'
 
     let user
@@ -89,7 +88,7 @@
     let repsCompleted = $state(0)
     let isUp = false // track jumping jack state
 
-    const scoreThreshold = 0.4
+    const scoreThreshold = 0.35
 
     async function initCounter() {
 
