@@ -29,9 +29,9 @@
         </p>
 
         <br>
-        <p class="text-gray-300 italic">you currently have {formatter.format(profile.balance)} in your account. earn more credits by <a class="underline hover:decoration-wavy" href="earn">doing jumping jacks.</a></p> 
+        <p class="text-gray-300 italic">you currently have {profile ? formatter.format(profile.balance) : "loading..."} in your account. earn more credits by <a class="underline hover:decoration-wavy" href="earn">doing jumping jacks.</a></p> 
 
-        <p class="text-gray-300 italic">your username is "{profile.name}". change it below:</p>
+        <p class="text-gray-300 italic">your username is "{profile ? profile.name : "loading..."}". change it below:</p>
 
         <input type="text" class="bg-black text-white rounded-md border-2 border-white my-2 p-1" bind:value={preferredName}>
         <button class="bg-black text-white rounded-md border-2 border-white my-2 p-1" onclick={setName}>save</button>
@@ -84,8 +84,12 @@
     export const prerender = true
     export const ssr = false // disable server-side rendering
 
+    
 
-    let user
+
+    let user = $state()
+
+            $inspect(user)
 
     let post = $state("")
 
@@ -113,12 +117,16 @@
         
         
         if (!session) {
+            console.log("signing in...")
             // only create new anon user if not already signed in
             let {data, error} = await supabase.auth.signInAnonymously();
-            user = data
+            user = data.user
         } else {
+            console.log("using session...")
             user = session.user
         }
+
+
 
         const { data: profileData } = await supabase
         .from('profiles')          // which table

@@ -5,10 +5,10 @@
 
 
         <br>
-        <p class="text-gray-500 italic">no video is ever sent to the server, i'm not smart enought to figure out how to do that. all processing is done locally on your device, using tensorflow.js.</p> 
+        <p class="text-gray-500 italic">no video is ever sent to the server, i'm not smart enough to figure out how to do that. all processing is done locally on your device, using tensorflow.js.</p> 
         <br>
 
-        <p class="text-gray-300 italic">you currently have {formatter.format(profile.balance)} in your account.</p> 
+        <p class="text-gray-300 italic">you currently have {formatter.format(profile.balance)} in your account. <a class="underline hover:decoration-wavy" href="/">go home?</a></p>  
         <p class="text-gray-300 italic">not working? make sure both of your wrists and shoulders are in the frame.</p> 
 
         <video bind:this={video} width="640" height="480" class="rounded-lg my-10 outline-2 outline-white"/>
@@ -61,7 +61,7 @@
         if (!session) {
             // only create new anon user if not already signed in
             let {data, error} = await supabase.auth.signInAnonymously();
-            user = data
+            user = data.user
         } else {
             user = session.user
         }
@@ -130,6 +130,7 @@
             const confident = leftWrist.score > scoreThreshold && leftShoulder.score > scoreThreshold && rightWrist.score > scoreThreshold && rightShoulder.score > scoreThreshold
 
                 if (armsUp && !isUp && confident) {
+                    repsCompleted++
                     repsCompleted++
                     isUp = true
                     
