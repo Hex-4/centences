@@ -34,6 +34,7 @@
     import * as poseDetection from '@tensorflow-models/pose-detection'
     import '@tensorflow/tfjs-backend-webgl'
 	import { all } from "@tensorflow/tfjs";
+    import * as tf from '@tensorflow/tfjs-core'
 
     let user
 
@@ -91,6 +92,9 @@
     const scoreThreshold = 0.4
 
     async function initCounter() {
+
+        await tf.setBackend('webgl')
+        await tf.ready()
         // get webcam
         const stream = await navigator.mediaDevices.getUserMedia({ 
         video: true 
